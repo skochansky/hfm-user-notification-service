@@ -10,10 +10,18 @@ services:
       dockerfile: .docker/Dockerfile
     volumes:
       - .:/usr/src/app
+    ports:
+      - "8080:8180"
     depends_on:
       - db-hfm-user-notifications-service
     links:
         - db-hfm-user-notifications-service:db-hfm-user-notifications-service
+    environment:
+      DB_HOST: db-hfm-user-notifications-service
+      DB_PORT: 5432
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
   db-hfm-user-notifications-service:
     networks:
       - hfm-user-notifications-service
